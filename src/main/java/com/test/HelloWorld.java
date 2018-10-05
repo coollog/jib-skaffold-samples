@@ -30,41 +30,10 @@ import static spark.Spark.port;
 
 public class HelloWorld {
 
-  // public static void main(String[] args) throws IOException, URISyntaxException {
-  //   String greeting = Greeting.getGreeting();
-  //
-  //   ClassLoader classLoader = HelloWorld.class.getClassLoader();
-  //   Path worldFile = Paths.get(classLoader.getResource("world2").toURI());
-  //   String world = new String(Files.readAllBytes(worldFile), StandardCharsets.UTF_8);
-  //
-  //   System.out.println(greeting + ", " + world);
-  //
-  //   System.out.println(new Temp().get());
-  //
-  //   if (System.getProperty("flag") != null) {
-  //     System.out.println("Passed flag -Dflag=" + System.getProperty("flag"));
-  //   }
-  //
-  //   if (System.getenv("envvar") != null) {
-  //     System.out.println("Got environment variable envvar=" + System.getenv("envvar"));
-  //   }
-  //
-  //   for (String arg : args) {
-  //     System.out.println("Got arg: " + arg);
-  //   }
-  //
-  //   Path extraFile = Paths.get("/asdf");
-  //   if (Files.exists(extraFile)) {
-  //     System.out.println(
-  //         "FOUND /asdf: "
-  //             + new String(Files.readAllBytes(extraFile), StandardCharsets.UTF_8));
-  //   }
-  // }
-
   public static void main(String[] args) {
     port(8080);
     get("/hello", (req, res) -> {
-      System.out.println("Got /hello again");
+      System.out.println("Got /hello");
       HttpResponse<String> name = Unirest.get("http://name-service/name").asString();
       return "Hello " + name.getBody();
     });

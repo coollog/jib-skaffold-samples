@@ -18,19 +18,10 @@ import static spark.Spark.get;
 
 public class HelloSub {
 
-  // public static void main(String[] args) {
-  //   System.out.println("hello sub 4");
-  //   try {
-  //     Thread.sleep(4000);
-  //   } catch (InterruptedException e) {
-  //     e.printStackTrace();
-  //   }
-  // }
-
   public static void main(String[] args) {
     get("/name", (req, res) -> {
       System.out.println("Got /name");
-      return "kasfjwenf";
+      return "Q Chen";
     });
   }
 }
