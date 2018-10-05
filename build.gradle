@@ -1,0 +1,107 @@
+buildscript {
+    repositories {
+        mavenLocal()
+    }
+    dependencies {
+        classpath 'com.google.cloud.tools:jib-gradle-plugin:0.9.12-SNAPSHOT'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'com.github.sherter.google-java-format' version '0.6'
+//    id 'com.google.cloud.tools.jib' version '0.9.11'
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+dependencies {
+    compile name: 'dependency-1.0.0'
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'com.google.cloud.tools.jib'
+
+    repositories {
+        mavenLocal()
+    }
+
+    dependencies {
+        compile 'com.google.guava:guava:23.6-jre'
+        compile 'org.javassist:javassist:3.22.0-GA'
+        compile 'com.google.http-client:google-http-client:1.23.0'
+        compile 'com.sparkjava:spark-core:2.7.2'
+        compile 'com.mashape.unirest:unirest-java:1.4.9'
+    }
+
+    jib {
+//    from {
+//        image = 'gcr.io/distroless/java'
+//    }
+//    extraDirectory = file('removeme')
+        to {
+//        image = 'gcr.io/qingyangc-sandbox/jibgradleimage:' + System.nanoTime()
+            image = 'gcr.io/qingyangc-sandbox/jibgradleimage'
+//        tags = ['tag1', 'tag2']
+
+//        auth {
+//            username = USERNAME
+//            password = 'gcloud auth print-access-token'.execute().text.trim()
+//        }
+//        image = 'coollog/jibtestimage'
+        }
+
+        container{
+            jvmFlags = ['-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005']
+        }
+//    format = 'OCI'
+//    useOnlyProjectCache = true
+//    extraDirectory = file('src/main/custom-extra-dir')
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.test.HelloWorld'
+    }
+}
+
+/* GOOGLE JAVA FORMAT */
+googleJavaFormat {
+    toolVersion = '1.5'
+}
+check.dependsOn verifyGoogleJavaFormat
+/* GOOGLE JAVA FORMAT */
+
+task run(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'com.test.HelloWorld'
+}
+
+
+build.dependsOn tasks.jib
+
+task jib1(type: com.google.cloud.tools.jib.gradle.BuildImageTask) {
+    jibExtension = project.extensions.getByName('jib')
+    doFirst {
+        jib.to.image = 'gcr.io/qingyangc-sandbox/jibgradleimage:1'
+    }
+}
+
+task jib2(type: com.google.cloud.tools.jib.gradle.BuildImageTask) {
+    jibExtension = project.extensions.getByName('jib')
+    doFirst {
+        jib.to.image = 'gcr.io/qingyangc-sandbox/jibgradleimage:2'
+    }
+}
+
+//project(':subhelloproject') {
+//    jib.to.image = 'gcr.io/qingyangc-sandbox/jibgradleimage:sub'
+//}

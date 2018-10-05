@@ -1,0 +1,224 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.test</groupId>
+  <artifactId>hello-world</artifactId>
+  <version>1</version>
+
+  <properties>
+    <java.target.version>1.8</java.target.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <jib-maven-plugin.version>0.9.11</jib-maven-plugin.version>
+
+    <imageName>gcr.io/qingyangc-sandbox/jibtestimage</imageName>
+    <!--<image>jibtest.azurecr.io/jibtestimage</image>-->
+    <imageTag>built-with-jib</imageTag>
+    <mainClass>com.test.HelloWorld</mainClass>
+
+    <maven.build.timestamp.format>yyyyMMdd-HHmmssSSS</maven.build.timestamp.format>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.test</groupId>
+      <artifactId>dependency</artifactId>
+      <version>1.0.0</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/libs/dependency-1.0.0.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>23.6-jre</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sparkjava</groupId>
+      <artifactId>spark-core</artifactId>
+      <version>2.7.2</version>
+    </dependency>
+    <dependency>
+      <groupId>com.mashape.unirest</groupId>
+      <artifactId>unirest-java</artifactId>
+      <version>1.4.9</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>${mainClass}</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+
+      <!-- Copy dependencies into target/libs/ -->
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>initialize</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <overWriteReleases>false</overWriteReleases>
+              <includeScope>runtime</includeScope>
+              <includeScope>system</includeScope>
+              <outputDirectory>${project.build.directory}/libs</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Build Docker Image -->
+      <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>jib-maven-plugin</artifactId>
+        <version>${jib-maven-plugin.version}</version>
+        <configuration>
+          <!--<useOnlyProjectCache>true</useOnlyProjectCache>-->
+          <!--<from>-->
+            <!--<image>gcr.io/qingyangc-sandbox/jibtestimage:built-with-jib</image>-->
+          <!--</from>-->
+          <from>
+            <image>openjdk:8-jdk-alpine</image>
+          </from>
+          <to>
+            <image>${imageName}:${imageTag}</image>
+            <!--<image>${jib.to.image}</image>-->
+            <tags>
+              <tag>something-else</tag>
+              <tag>and-another</tag>
+              <tag>and-another2</tag>
+              <tag>and-another3</tag>
+            </tags>
+          </to>
+          <!--<from>-->
+            <!--<image>openjdk:10-jre</image>-->
+          <!--</from>-->
+          <!--<extraDirectory>removeme</extraDirectory>-->
+
+          <!--<from>us.gcr.io/qingyangc-sandbox/jibtestimage:built-with-jib</from>-->
+          <!--<from>openjdk:8-jre-alpine</from>-->
+          <!--<registry>gcr.io</registry>-->
+          <!--<repository>qingyangc-sandbox/jibtestimage</repository>-->
+          <!--<tag>built-with-jib</tag>-->
+          <!--<registry>gcr.io</registry>-->
+          <!--<repository>jib-integration-testing/jibtestimage</repository>-->
+          <!--<credHelpers>-->
+            <!--<credHelper>gcr</credHelper>-->
+            <!--<credHelper>ecr-login</credHelper>-->
+          <!--</credHelpers>-->
+
+          <!--<credHelpers>-->
+            <!--<credHelper>osxkeychain</credHelper>-->
+          <!--</credHelpers>-->
+          <!--<registry>registry.hub.docker.com</registry>-->
+          <!--<repository>coollog/jibtestimage</repository>-->
+
+          <!--<credHelpers>-->
+            <!--<credHelper>ecr-login</credHelper>-->
+          <!--</credHelpers>-->
+          <!--<registry>990686584528.dkr.ecr.us-east-1.amazonaws.com</registry>-->
+          <!--<repository>jibtestimage</repository>-->
+
+          <!--<credHelpers>-->
+            <!--<credHelper>acr-darwin</credHelper>-->
+          <!--</credHelpers>-->
+          <!--<registry>jibtestimage.azurecr.io</registry>-->
+          <!--<repository>jibtestimage</repository>-->
+
+          <!--<registry>localhost:5000</registry>-->
+          <!--<repository>jibtestimage</repository>-->
+
+          <!--<registry>192.168.99.100:30738</registry>-->
+          <!--<repository>jibtestimage</repository>-->
+
+          <!--<registry>192.168.99.100:5000</registry>-->
+          <!--<repository>jibtestimage</repository>-->
+
+          <!--<tag>built-with-jib</tag>-->
+          <!--<tag>askfjl/waegawvw/aweg</tag>-->
+          <!--<environment>-->
+            <!--<envvar>IT WORKS 2</envvar>-->
+          <!--</environment>-->
+          <!--<jvmFlags>-->
+            <!--<jvmFlag>-Dflag=jk&amp;|$l;</jvmFlag>-->
+          <!--</jvmFlags>-->
+          <!--<jvmFlags>-->
+            <!--<jvmFlag>-Xms512m</jvmFlag>-->
+          <!--</jvmFlags>-->
+          <!--<mainClass>com.test.HelloWorld</mainClass>-->
+
+          <!--<enableReproducibleBuilds>true</enableReproducibleBuilds>-->
+          <!--<imageFormat>OCI</imageFormat>-->
+        </configuration>
+        <executions>
+          <execution>
+            <id>jib1</id>
+            <configuration>
+              <to>
+                <image>coollog/jibtestimage:tag1</image>
+              </to>
+            </configuration>
+          </execution>
+          <execution>
+            <id>jib2</id>
+            <configuration>
+              <to>
+                <image>coollog/jibtestimage:tag2</image>
+              </to>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!--<plugin>-->
+        <!--<groupId>com.google.cloud.tools</groupId>-->
+        <!--<artifactId>kubernetes-dev-maven-plugin</artifactId>-->
+        <!--<version>0.1.0-SNAPSHOT</version>-->
+      <!--</plugin>-->
+
+      <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>skaffold-maven-plugin</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+      </plugin>
+
+      <plugin>
+        <groupId>com.spotify</groupId>
+        <artifactId>dockerfile-maven-plugin</artifactId>
+        <version>1.3.7</version>
+        <configuration>
+          <repository>gcr.io/qingyangc-sandbox/jibspotifyimage</repository>
+          <!--<repository>990686584528.dkr.ecr.us-east-1.amazonaws.com/jibspotifyimage</repository>-->
+          <tag>built-with-jib</tag>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>minikube-maven-plugin</artifactId>
+        <version>1.0.0-alpha.1</version>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

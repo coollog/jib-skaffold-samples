@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: helloworld
+  name: helloworld
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: helloworld
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: helloworld
+    spec:
+      containers:
+      - image: gcr.io/qingyangc-sandbox/skaffold-jib
+        name: helloworld
+        resources: {}
+        ports:
+        - containerPort: 8080
+status: {}

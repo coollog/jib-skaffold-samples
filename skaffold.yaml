@@ -1,0 +1,17 @@
+apiVersion: skaffold/v1alpha4
+kind: Config
+build:
+  tagPolicy:
+    dateTime: {}
+  artifacts:
+  - image: gcr.io/qingyangc-sandbox/skaffold-jib-sub
+    context: .
+    jibGradle:
+      project: subhelloproject
+  - image: gcr.io/qingyangc-sandbox/skaffold-jib
+    context: .
+    jibMaven: {}
+  local: {}
+deploy:
+  kubectl:
+    manifests:

@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    cleanup: "true"
+    deployed-with: skaffold
+    docker-api-version: "1.37"
+    run: helloworld-sub
+    skaffold-builder: local
+    skaffold-deployer: kubectl
+    skaffold-tag-policy: dateTimeTagger
+    tail: "true"
+  name: name-service
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 4567
+  selector:
+    run: helloworld-sub
+  type: ClusterIP
+status:
+  loadBalancer: {}
