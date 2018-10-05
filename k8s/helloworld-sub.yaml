@@ -20,11 +20,8 @@ spec:
       containers:
       - image: gcr.io/qingyangc-sandbox/skaffold-jib-sub
         name: helloworld-sub
-        resources: {}
         ports:
         - containerPort: 5005
         - containerPort: 4567
-#        env:
-#        - name: JAVA_TOOL_OPTIONS
-#          value: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
+        resources: {}
 status: {}

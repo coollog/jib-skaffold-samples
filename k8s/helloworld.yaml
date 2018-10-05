@@ -20,7 +20,7 @@ spec:
       containers:
       - image: gcr.io/qingyangc-sandbox/skaffold-jib
         name: helloworld
-        resources: {}
         ports:
         - containerPort: 8080
+        resources: {}
 status: {}
