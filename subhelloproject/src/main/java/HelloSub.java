@@ -15,6 +15,7 @@
  */
 
 import static spark.Spark.get;
+import static spark.Spark.staticFiles;
 
 public class HelloSub {
 

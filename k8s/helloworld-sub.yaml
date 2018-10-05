@@ -18,7 +18,7 @@ spec:
         run: helloworld-sub
     spec:
       containers:
-      - image: gcr.io/qingyangc-sandbox/skaffold-jib-sub
+      - image: gcr.io/qingyangc-sandbox/skaffold-sub-jib
         name: helloworld-sub
         ports:
         - containerPort: 5005

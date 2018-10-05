@@ -27,11 +27,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import static spark.Spark.get;
 import static spark.Spark.port;
+import static spark.Spark.staticFiles;
 
 public class HelloWorld {
 
   public static void main(String[] args) {
     port(8080);
+    staticFiles.location("/public");
     get("/hello", (req, res) -> {
       System.out.println("Got /hello");
       HttpResponse<String> name = Unirest.get("http://name-service/name").asString();
