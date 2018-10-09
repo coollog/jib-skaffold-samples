@@ -2,7 +2,7 @@
 500m
 target
 .idea
-.mvn
 settings.xml
 build
 .gradle
+*.iml
