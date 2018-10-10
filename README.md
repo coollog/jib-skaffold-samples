@@ -11,7 +11,7 @@ Skaffold uses `k8s/` directory by default
 Generate the kubernetes manifests:
 
 ```shell
-(cd k8s/ && ./generate.sh)
+(cd k8s/ && ./kubegen.sh)
 ```
 
 
