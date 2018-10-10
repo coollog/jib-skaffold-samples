@@ -37,7 +37,7 @@ public class HelloWorld {
     get("/hello", (req, res) -> {
       System.out.println("Got /hello");
       HttpResponse<String> name = Unirest.get("http://name-service/name").asString();
-      return "Hello " + name.getBody();
+      return "Hello.asdfasdf " + name.getBody();
     });
   }
 }

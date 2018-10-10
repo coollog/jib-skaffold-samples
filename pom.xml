@@ -39,25 +39,6 @@
 
   <build>
     <plugins>
-      <!-- Copy dependencies into target/libs/ -->
-      <plugin>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>initialize</phase>
-            <goals>
-              <goal>copy-dependencies</goal>
-            </goals>
-            <configuration>
-              <overWriteReleases>false</overWriteReleases>
-              <includeScope>runtime</includeScope>
-              <includeScope>system</includeScope>
-              <outputDirectory>${project.build.directory}/libs</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
       <!-- Build Docker Image -->
       <plugin>
         <groupId>com.google.cloud.tools</groupId>
