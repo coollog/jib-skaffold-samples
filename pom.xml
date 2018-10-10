@@ -47,7 +47,7 @@
           <from>
             <image>gcr.io/distroless/java:debug</image>
           </from>
-          
+
           <!-- Comment this out for a faster build - this just adds a directory with 100,000 files. -->
           <extraDirectory>src/main/custom-extra-dir</extraDirectory>
         </configuration>

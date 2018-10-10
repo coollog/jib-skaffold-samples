@@ -9,7 +9,7 @@ Skaffold uses `k8s/` directory by default
 Generate the kubernetes manifests:
 
 ```shell
-cd k8s/ && ./generate.sh
+(cd k8s/ && ./generate.sh)
 ```
 
 
@@ -18,7 +18,7 @@ cd k8s/ && ./generate.sh
 Pass image to watch (excludes the image to debug so it's not rebuilding and we can do hot swap):
 
 ```shell
-./skaffold dev -w gcr.io/qingyangc-sandbox/skaffold-jib
+./skaffold dev -w gcr.io/qingyangc-sandbox/skaffold-jib-hello-service
 ```
 
 Then can just attach default debugger in IntelliJ at port 5005.
