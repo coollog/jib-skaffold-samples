@@ -4,15 +4,13 @@ build:
   tagPolicy:
     dateTime: {}
   artifacts:
-  - image: gcr.io/qingyangc-sandbox/skaffold-sub-jib
+  - image: gcr.io/qingyangc-sandbox/skaffold-jib-name-service
     context: .
     jibGradle:
-      project: subhelloproject
-  - image: gcr.io/qingyangc-sandbox/skaffold-jib
+      project: name-service
+  - image: gcr.io/qingyangc-sandbox/skaffold-jib-hello-service
     context: .
     jibMaven: {}
-#    sync:
-#      '*.html': src/main/resources/public/
   local: {}
 deploy:
   kubectl:

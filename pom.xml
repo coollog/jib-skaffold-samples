@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.test</groupId>
-  <artifactId>hello-world</artifactId>
+  <artifactId>hello-service</artifactId>
   <version>1</version>
 
   <properties>
@@ -39,15 +39,17 @@
 
   <build>
     <plugins>
-      <!-- Build Docker Image -->
       <plugin>
         <groupId>com.google.cloud.tools</groupId>
         <artifactId>jib-maven-plugin</artifactId>
-        <version>0.9.11</version>
+        <version>0.9.12-SNAPSHOT</version>
         <configuration>
           <from>
             <image>gcr.io/distroless/java:debug</image>
           </from>
+          
+          <!-- Comment this out for a faster build - this just adds a directory with 100,000 files. -->
+          <extraDirectory>src/main/custom-extra-dir</extraDirectory>
         </configuration>
       </plugin>
     </plugins>

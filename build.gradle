@@ -13,24 +13,21 @@ plugins {
 //    id 'com.google.cloud.tools.jib' version '0.9.11'
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
-
-repositories {
-    flatDir {
-        dirs 'libs'
-    }
-}
-dependencies {
-    compile name: 'dependency-1.0.0'
-}
-
 allprojects {
     apply plugin: 'java'
     apply plugin: 'com.google.cloud.tools.jib'
 
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
     repositories {
-        mavenLocal()
+        mavenCentral()
+        flatDir {
+            dir rootProject.file('libs')
+        }
+    }
+    dependencies {
+        compile name: 'dependency-1.0.0'
     }
 
     dependencies {
@@ -41,11 +38,7 @@ allprojects {
         compile 'com.mashape.unirest:unirest-java:1.4.9'
     }
 
-    jib {
-        container{
-            jvmFlags = ['-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005']
-        }
-    }
+    jib.container.jvmFlags = ['-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005']
 }
 
 /* GOOGLE JAVA FORMAT */
