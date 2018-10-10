@@ -1,9 +1,38 @@
+# AUTO-GENERATED
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: name-service
+  name: name-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: name-service
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: name-service
+    spec:
+      containers:
+      - image: gcr.io/qingyangc-sandbox/skaffold-jib-name-service
+        name: name-service
+        ports:
+        - containerPort: 5005
+        - containerPort: 4567
+        resources: {}
+status: {}
+---
 apiVersion: v1
 kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    run: helloworld-sub
+    run: name-service
   name: name-service
 spec:
   ports:
@@ -11,7 +40,7 @@ spec:
     protocol: TCP
     targetPort: 4567
   selector:
-    run: helloworld-sub
+    run: name-service
   type: ClusterIP
 status:
   loadBalancer: {}

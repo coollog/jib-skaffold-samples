@@ -1,27 +1,27 @@
+# AUTO-GENERATED
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    run: helloworld-sub
-  name: helloworld-sub
+    run: hello-service
+  name: hello-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: helloworld-sub
+      run: hello-service
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        run: helloworld-sub
+        run: hello-service
     spec:
       containers:
-      - image: gcr.io/qingyangc-sandbox/skaffold-sub-jib
-        name: helloworld-sub
+      - image: gcr.io/qingyangc-sandbox/skaffold-jib-hello-service
+        name: hello-service
         ports:
-        - containerPort: 5005
-        - containerPort: 4567
+        - containerPort: 8080
         resources: {}
 status: {}
