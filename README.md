@@ -4,6 +4,8 @@ Run `skaffold dev` to start the continuous development cycle:
 ./skaffold dev
 ```
 
+Use `skaffold-darwin` for macOS.
+
 Skaffold uses `k8s/` directory by default
 
 Generate the kubernetes manifests:

@@ -2,7 +2,7 @@ apiVersion: skaffold/v1alpha4
 kind: Config
 build:
   tagPolicy:
-    dateTime: {}
+    sha256: {}
   artifacts:
   - image: gcr.io/qingyangc-sandbox/skaffold-jib-name-service
     context: .
