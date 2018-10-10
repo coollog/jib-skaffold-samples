@@ -36,5 +36,11 @@ public class HelloService {
           HttpResponse<String> name = Unirest.get("http://name-service/name").asString();
           return Greeting.getGreeting() + " " + name.getBody();
         });
+
+    get("/leeroy",
+        (req, res) -> {
+          System.out.println("Got /leeroy");
+          return Unirest.get("http://leeroy-app").asString().getBody();
+        });
   }
 }

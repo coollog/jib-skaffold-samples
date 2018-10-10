@@ -11,6 +11,8 @@ build:
   - image: gcr.io/qingyangc-sandbox/skaffold-jib-hello-service
     context: .
     jibMaven: {}
+  - image: gcr.io/qingyangc-sandbox/leeroy-app
+    context: ./leeroy-app/
   local: {}
 deploy:
   kubectl:

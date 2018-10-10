@@ -20,7 +20,7 @@ Generate the kubernetes manifests:
 Pass image to watch (excludes the image to debug so it's not rebuilding and we can do hot swap):
 
 ```shell
-./skaffold dev -w gcr.io/qingyangc-sandbox/skaffold-jib-hello-service
+./skaffold dev -w gcr.io/qingyangc-sandbox/skaffold-jib-hello-service -w gcr.io/qingyangc-sandbox/leeroy-app
 ```
 
 Then can just attach default debugger in IntelliJ at port 5005.
@@ -29,4 +29,9 @@ Then can just attach default debugger in IntelliJ at port 5005.
 
 ```shell
 curl localhost:8080/hello
+```
+
+```shell
+curl localhost:8080/leeroy
+# 
 ```

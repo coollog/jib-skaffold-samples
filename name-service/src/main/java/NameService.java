@@ -27,7 +27,7 @@ public class NameService {
     get(
         "/name",
         (req, res) -> {
-          System.out.println("Got /name");
+          System.out.println("Got /name asdf");
           return new String(
               Files.readAllBytes(Paths.get(Resources.getResource("myname").toURI())),
               StandardCharsets.UTF_8);
