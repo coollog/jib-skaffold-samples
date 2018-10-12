@@ -83,9 +83,9 @@
   // })();
 </script>
 
-<script src="socket.io.slim.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.slim.js"></script>
 <script>
-  const socket = io('http://35.230.121.214/subscribe');
+  const socket = io('http://35.230.121.214/subscribe', { path: '/subscribe' });
   socket.on('update', (votes) => {
     resultsTable.update(votes);
   });

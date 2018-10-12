@@ -10,3 +10,10 @@ vote-service
 notification-service
 
 subscribe to vote notifications
+
+
+```
+kubectl create clusterrolebinding my-cluster-admin-binding --clusterrole=cluster-admin --user=$(gcloud info --format="value(config.account)")
+kubectl apply -f ambassador.yaml
+./skaffold dev
+```

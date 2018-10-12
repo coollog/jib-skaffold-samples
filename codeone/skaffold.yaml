@@ -8,7 +8,7 @@ build:
   - image: gcr.io/qingyangc-sandbox/codeone-vote
     jibGradle: {}
     context: vote-service
-  - image: gcr.io/qingyangc-sandbox/notification-service
+  - image: gcr.io/qingyangc-sandbox/codeone-notification
     context: notification-service
 #    sync:
 #      '*.js': .
