@@ -1,0 +1,84 @@
+<style>
+  templates {
+    display: none;
+  }
+</style>
+
+<script>
+  class Votes {
+
+    constructor(newRowHandler, updateRowHandler) {
+      this._votes = {};
+      this._newRowHandler = newRowHandler;
+      this._updateRowHandler = updateRowHandler;
+    }
+
+    update(newVotes) {
+      for (var name in newVotes) {
+        if (this._votes.hasOwnProperty(name)) {
+          this._updateRowHandler(name, newVotes[name]);
+        } else {
+          this._newRowHandler(name, newVotes[name]);
+        }
+        this._votes[name] = newVotes[name];
+      }
+    }
+  }
+
+  class ResultsTable {
+
+    constructor() {
+      this._votes = new Votes(this._handleNewRow.bind(this), this._handleUpdateRow.bind(this));
+      this._resolveTemplates();
+    }
+
+    update(newVotes) {
+      this._votes.update(newVotes);
+    }
+
+    _resolveTemplates() {
+      const rowTemplate = document.querySelector('template[name=resultsRow]');
+      this._rowTemplate = rowTemplate.innerHTML;
+    }
+
+    _handleNewRow(name, count) {
+      const resultsTable = document.querySelector('#results table');
+      resultsTable.innerHTML += this._makeRow(name, count);
+    }
+
+    _handleUpdateRow(name, count) {
+      const countCell = document.querySelector('#results tr[name=' + name + '] td.count');
+      countCell.innerHTML = count;
+    }
+
+    _makeRow(name, count) {
+      const bar = 'replaceme';
+      return this._rowTemplate
+        .replace(/{name}/g, name)
+        .replace(/{bar}/g, bar)
+        .replace(/{count}/g, count);
+    }
+  }
+</script>
+
+<templates>
+  <template name="resultsRow">
+    <tr name="{name}">
+      <td class="name">{name}</td>
+      <td class="bar">{bar}</td>
+      <td class="count">{count}</td>
+    </tr>
+  </template>
+</templates>
+
+<div id="results"><table></table></div>
+
+<script>
+  // (function() {
+    const resultsTable = new ResultsTable();
+    resultsTable.update({
+      Jib: 5,
+      Skaffold: 10,
+    });
+  // })();
+</script>
