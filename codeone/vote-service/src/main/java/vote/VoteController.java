@@ -16,18 +16,32 @@
 
 package vote;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 public class VoteController {
 
-  @RequestMapping(value = "/", method = RequestMethod.POST)
-  public ResponseEntity<String> vote(@RequestBody String votes) {
-    System.out.println("Got votes: " + votes);
+  private static final Map<String, Integer> votes = new HashMap<>();
+
+  @RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  public ResponseEntity<String> vote(@RequestBody Map<String, Integer> newVotes) {
+    System.out.println("Got new votes: " + newVotes);
+    for (Map.Entry<String, Integer> vote : newVotes.entrySet()) {
+      int count = 1;
+      if (votes.containsKey(vote.getKey())) {
+        count += votes.get(vote.getKey());
+      }
+      votes.put(vote.getKey(), count);
+    }
+    System.out.println("Updated votes: " + votes);
     return ResponseEntity.ok().build();
   }
 }

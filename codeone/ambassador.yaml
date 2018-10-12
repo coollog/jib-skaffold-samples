@@ -18,6 +18,13 @@ metadata:
       name:  vote-service
       prefix: /vote
       service: vote-service
+      ---
+      apiVersion: ambassador/v0
+      kind:  Mapping
+      name:  notification-service
+      prefix: /subscribe
+      service: notification-service
+      use_websocket: true
 spec:
   type: LoadBalancer
   loadBalancerIP: 35.230.121.214

@@ -82,3 +82,11 @@
     });
   // })();
 </script>
+
+<script src="socket.io.slim.js"></script>
+<script>
+  const socket = io('http://35.230.121.214/subscribe');
+  socket.on('update', (votes) => {
+    resultsTable.update(votes);
+  });
+</script>
