@@ -1,0 +1,10 @@
+apiVersion: skaffold/v1alpha4
+kind: Config
+build:
+  artifacts:
+  - image: gcr.io/qingyangc-sandbox/codeone-frontend
+    jibGradle: {}
+    context: frontend-service
+  - image: gcr.io/qingyangc-sandbox/codeone-vote
+    jibGradle: {}
+    context: vote-service

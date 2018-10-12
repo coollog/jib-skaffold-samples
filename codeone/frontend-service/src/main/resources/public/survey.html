@@ -1,3 +1,9 @@
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+</head>
+
 <style>
   #options .option {
 
@@ -27,7 +33,7 @@ Which of these technologies do you use?
   }));
 
   document.querySelector('#submit').addEventListener('click', () => {
-    const url = '/vote';
+    const url = 'http://35.230.121.214/vote';
 
     const votes = {};
     document.querySelectorAll('.option').forEach((el) => {
@@ -40,10 +46,14 @@ Which of these technologies do you use?
       method: 'POST',
       body: JSON.stringify(votes),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      mode: 'no-cors'
+    }).then((response) => {
+      console.log(response);
+      if (!response.ok) {
+        console.error('Error:', response.statusText);
       }
-    }).then(res => res.json())
-      .then(response => console.log('Success:', response))
-      .catch(error => console.error('Error:', error));
+    });
   });
 </script>
