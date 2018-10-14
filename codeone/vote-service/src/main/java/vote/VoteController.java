@@ -16,12 +16,12 @@
 
 package vote;
 
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +34,7 @@ public class VoteController {
   @RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<String> vote(@RequestBody Map<String, Integer> newVotes) {
     System.out.println("Got new votes: " + newVotes);
+
     for (Map.Entry<String, Integer> vote : newVotes.entrySet()) {
       int count = 1;
       if (votes.containsKey(vote.getKey())) {
@@ -41,7 +42,16 @@ public class VoteController {
       }
       votes.put(vote.getKey(), count);
     }
+
+    System.out.println("Notifying new votes...");
+
+    RestTemplate restTemplate = new RestTemplate();
+    HttpEntity<Map<String, Integer>> entity = new HttpEntity<>(votes);
+    ResponseEntity<String> s = restTemplate.exchange("http://notification-service/notify", HttpMethod.POST, entity, String.class);
+    System.out.println("Got response: " + s.getBody());
+
     System.out.println("Updated votes: " + votes);
+
     return ResponseEntity.ok().build();
   }
 }

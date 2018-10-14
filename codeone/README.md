@@ -1,7 +1,7 @@
 frontend-service
 
-/index.html - survey results page
-/survey.html - take the survey
+/ - take the survey
+/results.html - survey results page
 
 vote-service
 
@@ -14,6 +14,7 @@ subscribe to vote notifications
 
 ```
 kubectl create clusterrolebinding my-cluster-admin-binding --clusterrole=cluster-admin --user=$(gcloud info --format="value(config.account)")
-kubectl apply -f ambassador.yaml
+export EXTERNAL_IP=???
+./apply_ambassador.sh
 ./skaffold dev
 ```

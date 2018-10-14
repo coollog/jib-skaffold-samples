@@ -3,9 +3,16 @@
 const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+const bodyParser = require('body-parser');
 
-app.get('/notify', function(req, res){
-  res.send('<h1>Hello world</h1>');
+let prevVotes = {};
+
+app.use(bodyParser.json());
+app.post('/notify', (req, res) => {
+  res.send('Got it: ' + JSON.stringify(req.body));
+
+  io.emit('update', req.body, { for: 'everyone' });
+  prevVotes = req.body;
 });
 
 http.listen(3000, function(){
@@ -14,7 +21,8 @@ http.listen(3000, function(){
 
 io.on('connection', (socket) => {
   console.log('a user connected');
-  socket.on('disconnect', function(){
+  socket.emit('update', prevVotes);
+  socket.on('disconnect', () => {
     console.log('user disconnected');
   });
 });

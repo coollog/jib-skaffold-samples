@@ -1,92 +1,71 @@
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+</head>
+
 <style>
-  templates {
-    display: none;
+  html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+  }
+  #options .option {
+
+  }
+  #options .option.selected {
+    background: gray;
+  }
+
+  #submit.loading {
+    opacity: 0.5;
   }
 </style>
 
+Which of these technologies do you use?
+
+<div id="options">
+  <div class="option">Skaffold</div>
+  <div class="option">Jib</div>
+  <div class="option">Kubernetes</div>
+  <div class="option">None of the above</div>
+  <div id="submit">Submit</div>
+</div>
+
 <script>
-  class Votes {
-
-    constructor(newRowHandler, updateRowHandler) {
-      this._votes = {};
-      this._newRowHandler = newRowHandler;
-      this._updateRowHandler = updateRowHandler;
+  document.querySelectorAll('.option').forEach((el) => el.addEventListener('click', () => {
+    if (el.classList.contains('selected')) {
+      el.classList.remove('selected');
+    } else {
+      el.classList.add('selected');
     }
+  }));
 
-    update(newVotes) {
-      for (var name in newVotes) {
-        if (this._votes.hasOwnProperty(name)) {
-          this._updateRowHandler(name, newVotes[name]);
-        } else {
-          this._newRowHandler(name, newVotes[name]);
-        }
-        this._votes[name] = newVotes[name];
+  document.querySelector('#submit').addEventListener('click', () => {
+    const url = '/vote';
+
+    const votes = {};
+    document.querySelectorAll('.option').forEach((el) => {
+      if (el.classList.contains('selected')) {
+        votes[el.innerHTML] = 1;
       }
-    }
-  }
-
-  class ResultsTable {
-
-    constructor() {
-      this._votes = new Votes(this._handleNewRow.bind(this), this._handleUpdateRow.bind(this));
-      this._resolveTemplates();
-    }
-
-    update(newVotes) {
-      this._votes.update(newVotes);
-    }
-
-    _resolveTemplates() {
-      const rowTemplate = document.querySelector('template[name=resultsRow]');
-      this._rowTemplate = rowTemplate.innerHTML;
-    }
-
-    _handleNewRow(name, count) {
-      const resultsTable = document.querySelector('#results table');
-      resultsTable.innerHTML += this._makeRow(name, count);
-    }
-
-    _handleUpdateRow(name, count) {
-      const countCell = document.querySelector('#results tr[name=' + name + '] td.count');
-      countCell.innerHTML = count;
-    }
-
-    _makeRow(name, count) {
-      const bar = 'replaceme';
-      return this._rowTemplate
-        .replace(/{name}/g, name)
-        .replace(/{bar}/g, bar)
-        .replace(/{count}/g, count);
-    }
-  }
-</script>
-
-<templates>
-  <template name="resultsRow">
-    <tr name="{name}">
-      <td class="name">{name}</td>
-      <td class="bar">{bar}</td>
-      <td class="count">{count}</td>
-    </tr>
-  </template>
-</templates>
-
-<div id="results"><table></table></div>
-
-<script>
-  // (function() {
-    const resultsTable = new ResultsTable();
-    resultsTable.update({
-      Jib: 5,
-      Skaffold: 10,
     });
-  // })();
-</script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.slim.js"></script>
-<script>
-  const socket = io('http://35.230.121.214/subscribe', { path: '/subscribe' });
-  socket.on('update', (votes) => {
-    resultsTable.update(votes);
+    document.querySelector('#submit').classList.add('loading');
+
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(votes),
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+    }).then((response) => {
+      document.querySelector('#submit').classList.remove('loading');
+      console.log(response);
+      if (!response.ok) {
+        console.error('Error:', response.statusText);
+      }
+    });
   });
 </script>
