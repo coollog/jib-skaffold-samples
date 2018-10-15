@@ -66,7 +66,8 @@
   </div>
   <div class="option">Skaffold</div>
   <div class="option">Jib</div>
-  <div class="option">Kubernetes</div>
+  <div class="option">Knative</div>
+  <div class="option">App Engine</div>
   <div class="option">None of the above</div>
   <div id="submit">Submit</div>
 </div>
@@ -87,6 +88,8 @@
   }));
 
   document.querySelector('#submit').addEventListener('click', () => {
+    if (document.querySelector('#submit').classList.contains('loading')) return;
+
     const url = '/vote';
 
     const votes = {};
