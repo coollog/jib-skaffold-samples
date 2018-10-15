@@ -9,7 +9,7 @@ let prevVotes = {};
 
 app.use(bodyParser.json());
 app.post('/notify', (req, res) => {
-  res.send('Got it: ' + JSON.stringify(req.body));
+  res.send('Received it: ' + JSON.stringify(req.body));
 
   io.emit('update', req.body, { for: 'everyone' });
   prevVotes = req.body;
